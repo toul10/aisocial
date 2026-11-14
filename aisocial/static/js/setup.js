@@ -1,5 +1,5 @@
 // First-run wizard: AI key, brand, social accounts, summary.
-import { action, api, el, errorBox, fill, icon, L, languagePicker, takeParams, toast, withIcon } from "./common.js";
+import { action, api, el, errorBox, fill, icon, L, takeParams, toast, withIcon } from "./common.js";
 import { renderAccountsPanel } from "./panels/accounts.js";
 import { renderAIPanel } from "./panels/ai.js";
 import { renderContentPanel } from "./panels/content.js";
@@ -140,8 +140,6 @@ async function main() {
     fill(app, errorBox(err.message));
     return;
   }
-  const head = document.querySelector(".wizard .page-head");
-  if (head) head.append(languagePicker());
   stepper = el("nav", { class: "stepper", "aria-label": L("Steps", "Βήματα") });
   body = el("div");
   nav = el("div", { class: "wizard-nav" });

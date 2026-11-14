@@ -34,7 +34,7 @@ def say(message: str) -> None:
 
 
 def fail(message: str) -> None:
-    print(f"\n[AI Social] ΣΦΑΛΜΑ: {message}\n", file=sys.stderr, flush=True)
+    print(f"\n[AI Social] ERROR: {message}\n", file=sys.stderr, flush=True)
     sys.exit(1)
 
 
@@ -48,15 +48,15 @@ def ensure_venv() -> Path:
         probe = subprocess.run([str(python), "-c", "import sys"], capture_output=True)
         if probe.returncode == 0:
             return python
-        say("Το .venv δεν λειτουργεί (ίσως άλλαξε η Python). Φτιάχνεται από την αρχή…")
+        say(".venv does not work (maybe Python was updated). Rebuilding it…")
         shutil.rmtree(VENV, ignore_errors=True)
-    say("Πρώτη εκκίνηση: ετοιμάζεται το περιβάλλον Python (μία φορά, 1-3 λεπτά)…")
+    say("First start: setting up the Python environment (once, 1-3 minutes)…")
     try:
         venv.EnvBuilder(with_pip=True).create(VENV)
     except Exception as exc:  # noqa: BLE001 - show any failure in plain words
         fail(
-            f"Δεν δημιουργήθηκε το .venv ({exc}).\n"
-            "Σε Ubuntu/Debian τρέξε: sudo apt install python3-venv  και ξαναδοκίμασε."
+            f"Could not create .venv ({exc}).\n"
+            "On Ubuntu/Debian run: sudo apt install python3-venv  and try again."
         )
     return python
 
@@ -65,25 +65,25 @@ def ensure_requirements(python: Path) -> None:
     digest = hashlib.sha256(REQUIREMENTS.read_bytes()).hexdigest()
     if STAMP.exists() and STAMP.read_text(encoding="utf-8").strip() == digest:
         return
-    say("Εγκατάσταση βιβλιοθηκών (χρειάζεται internet)…")
+    say("Installing the libraries (needs internet)…")
     pip = [str(python), "-m", "pip", "--disable-pip-version-check"]
     subprocess.run([*pip, "install", "-q", "--upgrade", "pip"], check=False)
     if subprocess.run([*pip, "install", "-q", "-r", str(REQUIREMENTS)]).returncode != 0:
-        fail("Η εγκατάσταση των βιβλιοθηκών απέτυχε. Έλεγξε τη σύνδεση στο internet και ξαναδοκίμασε.")
+        fail("Installing the libraries failed. Check your internet connection and try again.")
     STAMP.write_text(digest, encoding="utf-8")
 
 
 def main() -> None:
     if sys.version_info < MIN_PYTHON:
         fail(
-            f"Χρειάζεται Python {MIN_PYTHON[0]}.{MIN_PYTHON[1]} ή νεότερη "
-            f"(βρέθηκε {sys.version.split()[0]}). Κατέβασέ την από https://www.python.org/downloads/"
+            f"Python {MIN_PYTHON[0]}.{MIN_PYTHON[1]} or newer is needed "
+            f"(found {sys.version.split()[0]}). Download it from https://www.python.org/downloads/"
         )
     os.chdir(ROOT)
     python = ensure_venv()
     ensure_requirements(python)
     if subprocess.run([str(python), "-m", "aisocial", "init"]).returncode != 0:
-        fail("Δεν ετοιμάστηκε το αρχείο .env (δες το μήνυμα πιο πάνω).")
+        fail("Could not set up the .env file (see the message above).")
     run_args = [] if "--no-browser" in sys.argv[1:] else ["--open"]
     try:
         code = subprocess.call([str(python), "-m", "aisocial", "run", *run_args])

@@ -16,6 +16,6 @@ for candidate in python3.14 python3.13 python3.12 python3.11 python3.10 python3 
 done
 
 echo ""
-echo "[AI Social] Δεν βρέθηκε Python 3.10 ή νεότερη."
-echo "Κατέβασέ την από https://www.python.org/downloads/ , εγκατάστησέ την και ξαναδοκίμασε."
+echo "[AI Social] Python 3.10 or newer was not found."
+echo "Download it from https://www.python.org/downloads/, install it and try again."
 exit 1

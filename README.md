@@ -11,7 +11,7 @@ let the AI write the posts (and, if you like, make an image), then publish them 
 - Images: upload your own, or let the AI make one (needs an OpenAI key).
 - A home page with your week ahead, how much you published and anything that needs attention.
 - Scheduling by date and time, a history of every post, and retry with one click.
-- English or Greek interface.
+- English interface, with Greek as an option in Settings.
 - API keys and tokens are stored **encrypted**, only on your computer.
 
 ---
@@ -29,7 +29,7 @@ The first start takes 1-3 minutes and needs internet: it creates a private Pytho
 downloads the libraries and writes a `.env` file with a random encryption key. After that it starts in a few seconds.
 
 **Leave the window that opens (the terminal) open.** The app runs as long as it is open. To stop it, press
-`Ctrl+C` or close the window. The messages in that window are mostly in Greek for now.
+`Ctrl+C` or close the window.
 
 ---
 
@@ -55,8 +55,7 @@ If the browser does not open by itself, open **http://localhost:5050** yourself.
 
 ## 3. Setup wizard (in the browser)
 
-The app opens in **English**. For Greek, choose **Ελληνικά** on the wizard's first screen, or later in
-**Settings → Language**.
+The app is in **English**. To switch the interface to Greek, choose **Ελληνικά** in **Settings → Language**.
 
 The wizard has 4 steps. Anything you skip can be done later in **Settings**.
 
@@ -190,9 +189,9 @@ When it is empty, the AI writes in the language of the topic.
 
 | Problem | Fix |
 |---|---|
-| The start window says Python 3.10 or newer was not found («Δεν βρέθηκε Python 3.10 ή νεότερη») | Install Python from https://www.python.org/downloads/ and try again. On Windows tick "Add python.exe to PATH". |
+| The start window says "Python 3.10 or newer was not found" | Install Python from https://www.python.org/downloads/ and try again. On Windows tick "Add python.exe to PATH". |
 | Installing the libraries failed | The first start needs internet. Try again. |
-| Port 5050 is in use («Η θύρα 5050 χρησιμοποιείται») | Add `AISOCIAL_PORT=5051` to `.env`. If you use LinkedIn, change the redirect URL in the LinkedIn app to `http://localhost:5051/oauth/linkedin/callback` (and the Callback URI in the X app). |
+| "Port 5050 is in use by another program" | Add `AISOCIAL_PORT=5051` to `.env`. If you use LinkedIn, change the redirect URL in the LinkedIn app to `http://localhost:5051/oauth/linkedin/callback` (and the Callback URI in the X app). |
 | The browser did not open | Open http://localhost:5050. If the app is already running, the start script just opens the page. |
 | X: 401 | Wrong keys. Copy them again (without spaces). |
 | X: 403 | The app does not have "Read and write" (after changing it, create the Access Token again), there are no credits, or the same text was already posted. |
@@ -298,7 +297,6 @@ Jinja and JavaScript. A new platform is a subclass of `Platform` (`aisocial/plat
 - Scheduled posts need the app to be running.
 - The calls to the platforms follow their documentation and are covered by tests, but the platforms change their
   rules often: make a **test post** on each account first.
-- The messages in the start window and the command line are mostly in Greek.
 
 ## License
 [MIT](LICENSE)

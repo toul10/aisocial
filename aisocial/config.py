@@ -80,9 +80,9 @@ class Settings:
             try:
                 value = int(raw)
             except ValueError as exc:
-                raise ConfigError(f"Το {name} πρέπει να είναι ακέραιος αριθμός (βρέθηκε {raw!r}).") from exc
+                raise ConfigError(f"{name} must be a whole number (found {raw!r}).") from exc
             if value < minimum:
-                raise ConfigError(f"Το {name} πρέπει να είναι τουλάχιστον {minimum}.")
+                raise ConfigError(f"{name} must be at least {minimum}.")
             return value
 
         def get_path(name: str, default: Path) -> Path:
@@ -93,14 +93,14 @@ class Settings:
         secret = get("APP_SECRET")
         if not secret:
             raise ConfigError(
-                "Λείπει το APP_SECRET. Ξεκίνα το πρόγραμμα με το start script "
-                "(φτιάχνει μόνο του το .env) ή τρέξε: python -m aisocial init"
+                "APP_SECRET is missing. Start the app with the start script "
+                "(it creates .env by itself) or run: python -m aisocial init"
             )
         if not is_valid_fernet_key(secret):
             raise ConfigError(
-                "Το APP_SECRET δεν είναι έγκυρο key. Φτιάξε νέο με: "
-                "python -m aisocial init --new-key (τα αποθηκευμένα API keys "
-                "και tokens θα πρέπει να μπουν ξανά)."
+                "APP_SECRET is not a valid key. Create a new one with: "
+                "python -m aisocial init --new-key (the saved API keys "
+                "and tokens will have to be entered again)."
             )
 
         host = get("AISOCIAL_HOST", "127.0.0.1")
@@ -108,26 +108,26 @@ class Settings:
         password = get("AISOCIAL_PASSWORD")
         if not is_loopback(host) and not password:
             raise ConfigError(
-                f"Δεν ξεκινάω στο {host} χωρίς AISOCIAL_PASSWORD: οποιοσδήποτε στο "
-                "δίκτυο θα μπορούσε να κάνει posts στους λογαριασμούς σου. Όρισε "
-                "AISOCIAL_PASSWORD στο .env ή κράτα AISOCIAL_HOST=127.0.0.1."
+                f"Not starting on {host} without AISOCIAL_PASSWORD: anyone on the "
+                "network could post to your accounts. Set "
+                "AISOCIAL_PASSWORD in .env or keep AISOCIAL_HOST=127.0.0.1."
             )
 
         public_url = get("AISOCIAL_PUBLIC_URL", f"http://localhost:{port}").rstrip("/")
         parsed = urlparse(public_url)
         if parsed.scheme not in ("http", "https") or not parsed.netloc:
-            raise ConfigError("Το AISOCIAL_PUBLIC_URL πρέπει να μοιάζει με http://localhost:5050")
+            raise ConfigError("AISOCIAL_PUBLIC_URL must look like http://localhost:5050")
 
         allowed = {f"localhost:{port}", f"127.0.0.1:{port}", f"[::1]:{port}", parsed.netloc.lower()}
         allowed |= {h.strip().lower() for h in get("AISOCIAL_ALLOWED_HOSTS").split(",") if h.strip()}
 
         provider = get("AI_TEXT_PROVIDER").lower()
         if provider and provider not in TEXT_PROVIDERS:
-            raise ConfigError("Το AI_TEXT_PROVIDER πρέπει να είναι auto, anthropic ή openai.")
+            raise ConfigError("AI_TEXT_PROVIDER must be auto, anthropic or openai.")
 
         effort = get("ANTHROPIC_EFFORT", "low").lower()
         if effort not in ("low", "medium", "high", "xhigh", "max"):
-            raise ConfigError("Το ANTHROPIC_EFFORT πρέπει να είναι low, medium, high, xhigh ή max.")
+            raise ConfigError("ANTHROPIC_EFFORT must be low, medium, high, xhigh or max.")
 
         db_path = get_path("AISOCIAL_DB_PATH", PROJECT_ROOT / "instance" / "aisocial.db")
         media_dir = get_path("AISOCIAL_MEDIA_DIR", db_path.parent / "media")

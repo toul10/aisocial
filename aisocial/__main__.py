@@ -56,12 +56,12 @@ def cmd_init(new_key: bool) -> int:
 
     if current and not new_key:
         if is_valid_fernet_key(current):
-            print("Το .env είναι έτοιμο.")
+            print(".env is ready.")
             return 0
         print(
-            "Το APP_SECRET στο .env δεν είναι έγκυρο. Φτιάξε νέο με:\n"
+            "APP_SECRET in .env is not valid. Create a new one with:\n"
             "    python -m aisocial init --new-key\n"
-            "(τα αποθηκευμένα API keys και tokens θα πρέπει να μπουν ξανά)",
+            "(the saved API keys and tokens will have to be entered again)",
             file=sys.stderr,
         )
         return 1
@@ -81,11 +81,11 @@ def cmd_init(new_key: bool) -> int:
     _write_private(ENV_PATH, "\n".join(out) + "\n")
     if current:
         print(
-            "Φτιάχτηκε νέο APP_SECRET (το παλιό .env κρατήθηκε ως .env.bak).\n"
-            "Τα αποθηκευμένα API keys και tokens πρέπει να μπουν ξανά στις Ρυθμίσεις."
+            "Created a new APP_SECRET (the old .env was kept as .env.bak).\n"
+            "Enter the saved API keys and tokens again in Settings."
         )
     else:
-        print("Φτιάχτηκε το .env με νέο, τυχαίο APP_SECRET.")
+        print("Created .env with a new random APP_SECRET.")
     return 0
 
 
@@ -125,7 +125,7 @@ def cmd_run(open_browser: bool) -> int:
         return 2
 
     if _already_running(settings.port):
-        print(f"Το AI Social τρέχει ήδη: {settings.public_url}")
+        print(f"AI Social is already running: {settings.public_url}")
         if open_browser:
             webbrowser.open(settings.public_url)
         return 0
@@ -138,8 +138,8 @@ def cmd_run(open_browser: bool) -> int:
     except OSError as exc:
         if exc.errno in _PORT_UNAVAILABLE:
             print(
-                f"\n[AI Social] Η θύρα {settings.port} χρησιμοποιείται από άλλο πρόγραμμα.\n"
-                f"Βάλε π.χ. AISOCIAL_PORT={settings.port + 1} στο αρχείο .env και ξεκίνα ξανά.\n",
+                f"\n[AI Social] Port {settings.port} is in use by another program.\n"
+                f"Set, for example, AISOCIAL_PORT={settings.port + 1} in the .env file and start again.\n",
                 file=sys.stderr,
             )
             return 3
@@ -151,9 +151,9 @@ def cmd_run(open_browser: bool) -> int:
     print(
         f"\n{line}\n"
         f"  AI Social: {settings.public_url}\n"
-        "  Άφησε αυτό το παράθυρο ανοιχτό. Τα προγραμματισμένα posts\n"
-        "  δημοσιεύονται μόνο όσο τρέχει το πρόγραμμα.\n"
-        "  Για να το σταματήσεις: Ctrl+C ή κλείσε το παράθυρο.\n"
+        "  Leave this window open. Scheduled posts go out only\n"
+        "  while the app is running.\n"
+        "  To stop it, press Ctrl+C or close the window.\n"
         f"{line}\n",
         flush=True,
     )
@@ -162,7 +162,7 @@ def cmd_run(open_browser: bool) -> int:
     try:
         server.run()
     except KeyboardInterrupt:
-        print("\nΤο AI Social σταμάτησε.")
+        print("\nAI Social stopped.")
     finally:
         services.scheduler.stop()
     return 0

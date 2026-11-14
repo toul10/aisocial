@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit 1
 status=$?
 if [ "$status" -ne 0 ]; then
   echo ""
-  echo "Πάτα Enter για να κλείσει το παράθυρο."
+  echo "Press Enter to close this window."
   read -r _
 fi
 exit "$status"
