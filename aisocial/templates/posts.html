@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Posts · AI Social{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Posts</h1>
+  <p class="lead">{{ L("Everything you have scheduled or published, by day. Scheduled posts go out only while AI Social is running.", "Ό,τι έχεις προγραμματίσει ή δημοσιεύσει, ανά ημέρα. Τα προγραμματισμένα βγαίνουν μόνο όσο τρέχει το AI Social.") }}</p>
+</header>
+<div id="app" class="stack"><p class="loading">{{ L("Loading…", "Φόρτωση…") }}</p></div>
+{% endblock %}

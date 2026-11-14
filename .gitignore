@@ -1,0 +1,15 @@
+# Local environment and secrets
+.venv/
+.env
+.env.bak
+
+# App data: database (encrypted credentials, posts) and generated images
+instance/
+
+# Python / tooling
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS
+.DS_Store

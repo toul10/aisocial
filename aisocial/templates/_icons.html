@@ -1,0 +1,16 @@
+{#- Line icons for the server-rendered shell. The same drawings live in static/js/common.js (ICONS). -#}
+{% macro icon(name) -%}
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+{%- if name == "home" -%}
+<path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/>
+{%- elif name == "pen" -%}
+<path d="M4.5 19.5h4l10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M14 8l3 3"/>
+{%- elif name == "calendar" -%}
+<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>
+{%- elif name == "sliders" -%}
+<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>
+{%- elif name == "contrast" -%}
+<circle cx="12" cy="12" r="8"/><path class="fill" d="M12 4a8 8 0 0 1 0 16z"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}

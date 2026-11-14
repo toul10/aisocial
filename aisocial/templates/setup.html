@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ L("Getting started", "Ξεκίνημα") }} · AI Social{% endblock %}
+{% block content %}
+<div class="wizard">
+  <header class="page-head">
+    <h1>{{ L("Welcome to AI Social", "Καλώς ήρθες στο AI Social") }}</h1>
+    <p class="lead">{{ L("Three short steps: an AI key, a few words about your business, and your accounts. Anything you skip can be done later in Settings.", "Τρία σύντομα βήματα: ένα AI key, λίγα λόγια για την επιχείρησή σου και οι λογαριασμοί σου. Ό,τι παραλείψεις το κάνεις αργότερα από τις Ρυθμίσεις.") }}</p>
+  </header>
+  <div id="app"><p class="loading">{{ L("Loading…", "Φόρτωση…") }}</p></div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ L("Settings", "Ρυθμίσεις") }} · AI Social{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>{{ L("Settings", "Ρυθμίσεις") }}</h1>
+  <p class="lead">{{ L("AI keys, social media accounts and the voice of your business.", "AI keys, λογαριασμοί social media και το ύφος της επιχείρησής σου.") }}</p>
+</header>
+<div class="settings-layout">
+  <nav class="subnav" aria-label="{{ L('Settings sections', 'Ενότητες ρυθμίσεων') }}">
+    <a href="#ai">AI</a>
+    <a href="#accounts">{{ L("Accounts", "Λογαριασμοί") }}</a>
+    <a href="#content">{{ L("Business and topics", "Επιχείρηση και θέματα") }}</a>
+    <a href="#language">{{ L("Language", "Γλώσσα") }}</a>
+    <a href="#system">{{ L("System", "Σύστημα") }}</a>
+  </nav>
+  <div id="app" class="stack"><p class="loading">{{ L("Loading…", "Φόρτωση…") }}</p></div>
+</div>
+{% endblock %}

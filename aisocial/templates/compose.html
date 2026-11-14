@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ L("New post", "Νέο post") }} · AI Social{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>{{ L("New post", "Νέο post") }}</h1>
+  <p class="lead">{{ L("The AI writes a version for each platform. Edit it as much as you like, then publish it now or later.", "Το AI γράφει μια εκδοχή για κάθε πλατφόρμα. Τη διορθώνεις όσο θέλεις και τη δημοσιεύεις τώρα ή αργότερα.") }}</p>
+</header>
+<div id="app"><p class="loading">{{ L("Loading…", "Φόρτωση…") }}</p></div>
+{% endblock %}

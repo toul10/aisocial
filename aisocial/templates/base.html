@@ -1,0 +1,37 @@
+{% from "_icons.html" import icon %}<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}AI Social{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}?v={{ asset_version }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ asset_version }}">
+  <script src="{{ url_for('static', filename='js/theme.js') }}?v={{ asset_version }}"></script>
+</head>
+<body data-page="{{ page }}">
+  <a class="skip-link" href="#main">{{ L("Skip to content", "Μετάβαση στο περιεχόμενο") }}</a>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('pages.dashboard') }}">
+        <img src="{{ url_for('static', filename='favicon.svg') }}?v={{ asset_version }}" alt="" width="34" height="34">
+        <span>AI Social</span>
+      </a>
+      {% if page != "setup" %}
+      <a class="btn btn-primary new-post" href="{{ url_for('pages.compose') }}"{% if page == "compose" %} aria-current="page"{% endif %}>{{ icon("pen") }}<span>{{ L("New post", "Νέο post") }}</span></a>
+      <nav class="nav" aria-label="{{ L('Main menu', 'Κύριο μενού') }}">
+        <a href="{{ url_for('pages.dashboard') }}"{% if page == "dashboard" %} aria-current="page"{% endif %}>{{ icon("home") }}<span>{{ L("Home", "Αρχική") }}</span></a>
+        <a href="{{ url_for('pages.posts') }}"{% if page == "posts" %} aria-current="page"{% endif %}>{{ icon("calendar") }}<span>Posts</span></a>
+        <a href="{{ url_for('pages.settings') }}"{% if page == "settings" %} aria-current="page"{% endif %}>{{ icon("sliders") }}<span>{{ L("Settings", "Ρυθμίσεις") }}</span></a>
+      </nav>
+      {% endif %}
+      <button class="theme-btn" id="theme-toggle" type="button" title="{{ L('Light or dark theme', 'Φωτεινό ή σκοτεινό θέμα') }}">{{ icon("contrast") }}<span>{{ L("Switch theme", "Αλλαγή θέματος") }}</span></button>
+    </aside>
+    <main class="main" id="main">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script type="module" src="{{ url_for('static', filename='js/' ~ page ~ '.js') }}?v={{ asset_version }}"></script>
+</body>
+</html>
